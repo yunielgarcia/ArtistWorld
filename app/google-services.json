@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "914710126519",
+    "firebase_url": "https://artistworld-24fde.firebaseio.com",
+    "project_id": "artistworld-24fde",
+    "storage_bucket": "artistworld-24fde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914710126519:android:c7680dab120124a1",
+        "android_client_info": {
+          "package_name": "com.mycompany.artistworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914710126519-c3221nso13jii2qap642r0l393phd84d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.artistworld",
+            "certificate_hash": "c415fe2407fc208714fa309fdaa6beb881e7993c"
+          }
+        },
+        {
+          "client_id": "914710126519-dv6ssd5o0t2edlh4g90d0n0grick8c2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEv-3nJ9Mv0QffozgoDaS_qRFwRJNt9TM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914710126519-dv6ssd5o0t2edlh4g90d0n0grick8c2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

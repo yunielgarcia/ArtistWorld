@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/left_right_card_margin"
+    android:layout_marginEnd="@dimen/left_right_card_margin"
+    android:layout_marginTop="@dimen/top_bottom_card_margin"
+    android:layout_marginBottom="@dimen/top_bottom_card_margin"
+    card_view:cardCornerRadius="@dimen/idea_card_corner_radius"
+    card_view:cardElevation="@dimen/idea_card_elevation"
+    card_view:cardUseCompatPadding="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:maxWidth="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/a_ic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/idea_card_title_bottom_left_right_padding"
+                android:paddingRight="@dimen/idea_card_title_bottom_left_right_padding"
+                android:paddingTop="@dimen/idea_card_title_top_padding"
+                android:textColor="@color/card_title_c"
+                android:textSize="@dimen/idea_card_title_size"
+                tools:text="Title goes here" />
+
+            <TextView
+                android:id="@+id/by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/idea_card_title_bottom_left_right_padding"
+                android:paddingLeft="@dimen/idea_card_title_bottom_left_right_padding"
+                android:paddingRight="@dimen/idea_card_title_bottom_left_right_padding"
+                android:paddingTop="@dimen/idea_card_by_padding_top"
+                android:textSize="@dimen/idea_card_by"
+                tools:text="by: yggarcia" />
+
+            <RelativeLayout
+                android:id="@+id/progress_bar_cont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/prog_bar"
+                    style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="@dimen/pb_margin"
+                    android:layout_marginRight="@dimen/pb_margin"
+                    tools:progress="50" />
+
+                <ImageView
+                    android:id="@+id/thumb_ic_img"
+                    android:layout_width="@dimen/thumb_size"
+                    android:layout_height="@dimen/thumb_size"
+                    android:layout_below="@+id/prog_bar"
+                    android:layout_marginStart="@dimen/thumb_margin"
+                    android:src="@drawable/ic_thumb_up" />
+
+                <TextView
+                    android:id="@+id/percent_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/prog_bar"
+                    android:layout_marginEnd="@dimen/thumb_margin"
+                    tools:text="50%" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
