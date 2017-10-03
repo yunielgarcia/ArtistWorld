@@ -11,15 +11,25 @@ import android.widget.TextView;
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.data.ArtistWorldContract;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ygarcia on 10/2/2017.
  */
 
-public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapter.FavViewHolder>{
+public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapter.FavViewHolder> {
 
     // Class variables for the Cursor that holds task data and the Context
     private Cursor mCursor;
     private Context mContext;
+    //reference to the interface
+    final private FavListItemClickListener mFavOnClickListener;
+
+    //interface for click handling
+    public interface FavListItemClickListener {
+        void onListItemClickI(String selectedSlug);
+    }
 
 
     /**
@@ -27,8 +37,9 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
      *
      * @param mContext the current Context
      */
-    public CustomCursorAdapter(Context mContext) {
+    public CustomCursorAdapter(Context mContext, FavListItemClickListener favListItemClickListener) {
         this.mContext = mContext;
+        this.mFavOnClickListener = favListItemClickListener;
     }
 
 
@@ -51,7 +62,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
     /**
      * Called by the RecyclerView to display data at a specified position in the Cursor.
      *
-     * @param holder The ViewHolder to bind Cursor data to
+     * @param holder   The ViewHolder to bind Cursor data to
      * @param position The position of the data in the Cursor
      */
     @Override
@@ -60,16 +71,20 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
         // Indices for the _id, description, and priority columns
         int idIndex = mCursor.getColumnIndex(ArtistWorldContract.ProjectEntry._ID);
         int titleIndex = mCursor.getColumnIndex(ArtistWorldContract.ProjectEntry.COLUMN_PROJECT_TITLE);
+        int voteWeightIndex = mCursor.getColumnIndex(ArtistWorldContract.ProjectEntry.COLUMN_VOTE_WEIGHT);
 
         mCursor.moveToPosition(position); // get to the right location in the cursor
 
         // Determine the values of the wanted data
         final int id = mCursor.getInt(idIndex);
         String title = mCursor.getString(titleIndex);
+        String voteWeight = String.valueOf(mCursor.getInt(voteWeightIndex));
+
 
         //Set values
         holder.itemView.setTag(id);
         holder.titleView.setText(title);
+        holder.favVoteWeightView.setText(voteWeight);
     }
 
     /**
@@ -105,10 +120,13 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
 
 
     // Inner class for creating ViewHolders
-    class FavViewHolder extends RecyclerView.ViewHolder {
+    class FavViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Class variables for the task description and priority TextViews
+        @BindView(R.id.fav_project_title)
         TextView titleView;
+        @BindView(R.id.fav_vote_weight_tv)
+        TextView favVoteWeightView;
 
         /**
          * Constructor for the TaskViewHolders.
@@ -117,8 +135,18 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
          */
         public FavViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
 
-            titleView = (TextView) itemView.findViewById(R.id.fav_project_title);
+        @Override
+        public void onClick(View view) {
+            int adapterPosition = getAdapterPosition();
+            mCursor.moveToPosition(adapterPosition);
+            int slugIndex = mCursor.getColumnIndex(ArtistWorldContract.ProjectEntry.COLUMN_PROJECT_SLUG);
+            String slugSelected = mCursor.getString(slugIndex);
+
+            mFavOnClickListener.onListItemClickI(slugSelected);
         }
     }
 }

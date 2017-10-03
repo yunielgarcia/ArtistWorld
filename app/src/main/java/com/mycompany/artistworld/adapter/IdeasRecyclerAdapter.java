@@ -133,7 +133,6 @@ public class IdeasRecyclerAdapter extends RecyclerView.Adapter<IdeasRecyclerAdap
             view.setOnClickListener(this);
         }
 
-
         /**
          * This gets called by the child views during a click.
          *

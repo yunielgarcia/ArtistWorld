@@ -1,5 +1,6 @@
 package com.mycompany.artistworld.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -9,12 +10,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.adapter.CustomCursorAdapter;
 import com.mycompany.artistworld.data.ArtistWorldContract;
+import com.mycompany.artistworld.model.Project;
+import com.mycompany.artistworld.rest.IdeaApiInterface;
+import com.mycompany.artistworld.rest.ServiceGenerator;
 
-public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.mycompany.artistworld.fragments.HomeFragment.IDEA_SELECTED;
+
+public class FavoriteActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CustomCursorAdapter.FavListItemClickListener{
+
+    @BindView(R.id.pb_fav_loading_indicator)
+    ProgressBar mLoadingIndicator;
+    @BindView(R.id.recyclerViewFavorites)
+    RecyclerView recyclerView;
+
+    Project projectSelected;
 
     // Constants for logging and referring to a unique loader
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -22,23 +44,24 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
 
     // Member variables for the adapter and RecyclerView
     private CustomCursorAdapter mAdapter;
-    RecyclerView mRecyclerView;
+
+    IdeaApiInterface ideaService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-
-        // Set the RecyclerView to its corresponding view
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewFavorites);
+        ButterKnife.bind(this);
 
         // Set the layout for the RecyclerView to be a linear layout, which measures and
         // positions items within a RecyclerView into a linear list
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the adapter and attach it to the RecyclerView
-        mAdapter = new CustomCursorAdapter(this);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new CustomCursorAdapter(this, this);
+        recyclerView.setAdapter(mAdapter);
+
+        ideaService = ServiceGenerator.createService(IdeaApiInterface.class);
 
          /*
          Ensure a loader is initialized and active. If the loader doesn't already exist, one is
@@ -134,4 +157,68 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
+
+    @Override
+    public void onListItemClickI(String selectedSlug) {
+        //Toast.makeText(this, selectedSlug, Toast.LENGTH_SHORT).show();
+        showProgressLoader();
+
+        //load the idea here and then if success go to detail
+        Call<Project> call = ideaService.getIdea(selectedSlug);
+        call.enqueue(new Callback<Project>() {
+            @Override
+            public void onResponse(Call<Project> call, Response<Project> response) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
+                if (response.isSuccessful()){
+                    projectSelected = response.body();
+                    goToDetailView(projectSelected);
+                } else {
+                    if (response.code() == 401){
+                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                    } else if (response.code() >= 400){
+                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
+                    }
+                    showIdeaDataView();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Project> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                showIdeaDataView();
+            }
+        });
+    }
+
+    private void showProgressLoader(){
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showIdeaDataView() {
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void goToDetailView(Project project){
+        Intent intent = new Intent(this, ProjectDetailActivity.class);
+        Bundle extra = new Bundle();
+        extra.putParcelable(IDEA_SELECTED, project);
+        intent.putExtras(extra);
+        startActivity(intent);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

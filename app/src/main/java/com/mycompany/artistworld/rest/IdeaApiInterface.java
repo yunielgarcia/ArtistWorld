@@ -1,9 +1,11 @@
 package com.mycompany.artistworld.rest;
 
+import com.mycompany.artistworld.model.Project;
 import com.mycompany.artistworld.model.ProjectResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -26,5 +28,8 @@ public interface IdeaApiInterface {
     Call<ProjectResponse> findIdeas(
             @Query("query") String query,
             @Query("page") int page);
+
+    @GET("v1/ideas/{idea_slug}")
+    Call<Project> getIdea(@Path("idea_slug") String slug);
 
 }
