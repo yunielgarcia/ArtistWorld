@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,12 +10,27 @@
         android:id="@+id/recyclerViewFavorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/pb_fav_loading_indicator"
-        android:layout_height="42dp"
         android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_gravity="center"
         android:visibility="invisible" />
 

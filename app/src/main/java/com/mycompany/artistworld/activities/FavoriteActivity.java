@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.adapter.CustomCursorAdapter;
 import com.mycompany.artistworld.data.ArtistWorldContract;
@@ -35,6 +37,8 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
     ProgressBar mLoadingIndicator;
     @BindView(R.id.recyclerViewFavorites)
     RecyclerView recyclerView;
+    @BindView(R.id.adView)
+    AdView mAdView;
 
     Project projectSelected;
 
@@ -52,6 +56,9 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         // Set the layout for the RecyclerView to be a linear layout, which measures and
         // positions items within a RecyclerView into a linear list
@@ -78,6 +85,7 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
     @Override
     protected void onResume() {
         super.onResume();
+        showIdeaDataView();
 
         // re-queries for all tasks
         getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
