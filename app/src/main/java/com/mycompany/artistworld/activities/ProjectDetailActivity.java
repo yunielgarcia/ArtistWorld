@@ -1,6 +1,10 @@
 package com.mycompany.artistworld.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.mycompany.artistworld.R;
+import com.mycompany.artistworld.data.ArtistWorldContract;
+import com.mycompany.artistworld.data.ProjectDbHelper;
 import com.mycompany.artistworld.fragments.HomeFragment;
 import com.mycompany.artistworld.model.Content;
 import com.mycompany.artistworld.model.Project;
@@ -23,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProjectDetailActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
@@ -45,6 +53,8 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
     ProgressBar progressBar;
     @BindView(R.id.detail_percent_tv)
     TextView votePercent;
+
+    private SQLiteDatabase mDb;
 
 
     @Override
@@ -82,6 +92,21 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
 
         }
 
+        // Create a DB helper (this will create the DB if run for the first time)
+        ProjectDbHelper dbHelper = new ProjectDbHelper(this);
+
+        // Keep a reference to the mDb until paused or killed. Get a writable database
+        // because you will be adding items
+        mDb = dbHelper.getWritableDatabase();
+
+        //DataTestUtil.insertFakeData(mDb);
+
+        // Get all guest info from the database and save in a cursor
+        Cursor cursor = getAllProjects();
+
+        int totalInDb = cursor.getCount();
+        Toast.makeText(this, "Total items" + totalInDb, Toast.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -103,6 +128,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
     public void onSliderClick(BaseSliderView slider) {
 
     }
+
 
     @Override//slider
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -148,4 +174,44 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
             mDemoSlider.addSlider(textSliderView);
         }
     }
+
+    private Cursor getAllProjects() {
+        return mDb.query(
+                ArtistWorldContract.ProjectEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ArtistWorldContract.ProjectEntry.COLUMN_TIMESTAMP
+        );
+    }
+
+    @OnClick(R.id.fab)
+    public void voteAndAddToFavorite(){
+        if (mSelectedIdea == null) return;
+
+        //create a ContentValues object
+        ContentValues cv = new ContentValues();
+        cv.put(ArtistWorldContract.ProjectEntry.COLUMN_PROJECT_SLUG, mSelectedIdea.getmSlug());
+        cv.put(ArtistWorldContract.ProjectEntry.COLUMN_PROJECT_TITLE, mSelectedIdea.getmTitle());
+        cv.put(ArtistWorldContract.ProjectEntry.COLUMN_VOTE_WEIGHT, 5); //FOR NOW SINCE VOTE WEIGHT IS NO YET IMPLEMENTED
+        cv.put(ArtistWorldContract.ProjectEntry.COLUMN_MAIN_CONTENT_PATH, mSelectedIdea.getmContents().get(0).getmDisplayImg());
+
+        //insert data using contentProvider
+        Uri uri = getContentResolver().insert(ArtistWorldContract.ProjectEntry.CONTENT_URI, cv);
+
+        if (uri != null){
+            Toast.makeText(this, uri.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/recycler_view_item_padding">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fav_label_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fav_item_label_bottom_margin"
+                android:text="@string/fav_project_title"
+                tools:text="Project title" />
+
+            <TextView
+                android:id="@+id/fav_project_title"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/primary_text_light"
+                tools:text="An awesome idea" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fav_vote_weight_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/fav_item_label_bottom_margin"
+                android:text="Vote weight" />
+
+            <TextView
+                android:id="@+id/fav_vote_weight_tv"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fav_vote_weight_label_tv"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/fav_vote_heart_iv"
+                android:textColor="@android:color/primary_text_light"
+                tools:text="5" />
+
+            <ImageView
+                android:id="@+id/fav_vote_heart_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/fav_vote_weight_label_tv"
+                android:layout_below="@id/fav_vote_weight_label_tv"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_fav_heart" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <!-- A gray divider line at the bottom of each task -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+</LinearLayout>

@@ -24,19 +24,21 @@ public class Project implements Parcelable{
     private String mIdeaCreator;
     @SerializedName("vote_percent")
     private int mVotePercent;
+    @SerializedName("slug")
+    private String mSlug;
 
-    public Project(String mTitle, String mDescription, List<Content> contents, String creator, int votePercent) {
+    public Project(String mTitle, String mDescription, List<Content> contents, String creator, int votePercent, String slug) {
         this.mTitle = mTitle;
         this.mDescription = mDescription;
         this.mContents = contents;
         this.mIdeaCreator = creator;
         this.mVotePercent = votePercent;
+        this.mSlug = slug;
     }
 
     protected Project(Parcel in) {
         mTitle = in.readString();
         mDescription = in.readString();
-        //mContents = new ArrayList<Content>();
         if (in.readByte() == 0x01) {
             mContents = new ArrayList<Content>();
             in.readList(mContents, Content.class.getClassLoader());
@@ -44,9 +46,9 @@ public class Project implements Parcelable{
             mContents = null;
         }
 
-        //in.readList(mContents, null);
         mIdeaCreator = in.readString();
         mVotePercent = in.readInt();
+        mSlug = in.readString();
     }
 
     @SuppressWarnings("unused")
@@ -82,6 +84,10 @@ public class Project implements Parcelable{
         return mVotePercent;
     }
 
+    public String getmSlug() {
+        return mSlug;
+    }
+
     //Parcelable methods
     @Override
     public int describeContents() {
@@ -92,13 +98,16 @@ public class Project implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mTitle);
         dest.writeString(mDescription);
+
         if (mContents == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(mContents);
         }
+
         dest.writeString(mIdeaCreator);
         dest.writeInt(mVotePercent);
+        dest.writeString(mSlug);
     }
 }

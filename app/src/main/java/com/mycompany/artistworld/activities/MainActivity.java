@@ -3,6 +3,7 @@ package com.mycompany.artistworld.activities;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -187,10 +188,12 @@ public class MainActivity extends AppCompatActivity {
 //                        CURRENT_TAG = TAG_HOME;
                         Toast.makeText(getBaseContext(), "click on Login", Toast.LENGTH_SHORT).show();
                         break;
-//                    case R.id.nav_settings:
-//                        navItemIndex = 4;
-//                        CURRENT_TAG = TAG_SETTINGS;
-//                        break;
+                    case R.id.nav_favorite:
+                        navItemIndex = 3;
+//                      CURRENT_TAG = TAG_SETTINGS;
+                        Intent intent = new Intent(getBaseContext(), FavoriteActivity.class);
+                        startActivity(intent);
+                        break;
 //                    case R.id.nav_privacy_policy:
 //                        // launch new intent instead of loading fragment
 //                        startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
