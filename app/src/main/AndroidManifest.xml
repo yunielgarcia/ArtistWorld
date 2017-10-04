@@ -40,12 +40,15 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".activities.FavoriteActivity"></activity>
+        <activity android:name=".activities.FavoriteActivity" />
 
         <provider
-            android:name="com.mycompany.artistworld.data.ProjectContentProvider"
+            android:name=".data.ProjectContentProvider"
             android:authorities="com.mycompany.artistworld"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.LoginActivity"></activity>
     </application>
 
 </manifest>

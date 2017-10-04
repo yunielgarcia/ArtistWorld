@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.adapter.ViewPagerAdapter;
@@ -181,12 +180,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_login:
                         navItemIndex = 0;
 //                        CURRENT_TAG = TAG_HOME;
-                        Toast.makeText(getBaseContext(), "click on Login", Toast.LENGTH_SHORT).show();
+                        Intent LoginIntent = new Intent(getBaseContext(), LoginActivity.class);
+                        startActivity(LoginIntent);
                         break;
                     case R.id.nav_create:
                         navItemIndex = 1;
 //                        CURRENT_TAG = TAG_HOME;
-                        Toast.makeText(getBaseContext(), "click on Login", Toast.LENGTH_SHORT).show();
+                        Intent signUpIntent = new Intent(getBaseContext(), SignUpActivity.class);
+                        startActivity(signUpIntent);
                         break;
                     case R.id.nav_favorite:
                         navItemIndex = 3;

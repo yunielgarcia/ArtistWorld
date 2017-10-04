@@ -2,9 +2,13 @@ package com.mycompany.artistworld.rest;
 
 import com.mycompany.artistworld.model.Project;
 import com.mycompany.artistworld.model.ProjectResponse;
+import com.mycompany.artistworld.objects.AuthUser;
+import com.mycompany.artistworld.objects.UserCredentials;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -32,4 +36,6 @@ public interface IdeaApiInterface {
     @GET("v1/ideas/{idea_slug}")
     Call<Project> getIdea(@Path("idea_slug") String slug);
 
+    @POST("auth/login/")
+    Call<UserCredentials> login(@Body AuthUser authUser);
 }
