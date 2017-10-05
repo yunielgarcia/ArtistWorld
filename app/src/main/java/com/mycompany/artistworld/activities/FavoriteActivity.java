@@ -9,7 +9,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
     RecyclerView recyclerView;
     @BindView(R.id.adView)
     AdView mAdView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     Project projectSelected;
 
@@ -56,6 +60,10 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //enables the up arrow
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -215,6 +223,17 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
         extra.putParcelable(IDEA_SELECTED, project);
         intent.putExtras(extra);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 

@@ -48,5 +48,11 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+
+    <!--Values in SharedPreferences file-->
+    <string name="user_id_key" translatable="false">user_id</string>
+    <string name="token_key" translatable="false">token</string>
+    <string name="preference_name" translatable="false">preference</string>
+
 </resources>
 

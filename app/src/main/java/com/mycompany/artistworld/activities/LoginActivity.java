@@ -1,12 +1,13 @@
 package com.mycompany.artistworld.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.objects.AuthUser;
 import com.mycompany.artistworld.objects.UserCredentials;
@@ -20,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -30,10 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText mPassword;
 
     IdeaApiInterface ideaService;
-
-    int userId;
-    String userToken;
-
+    boolean isLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
         ideaService = ServiceGenerator.createService(IdeaApiInterface.class);
 
-        FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+        checkUserCredentials();
+        Toast.makeText(this, String.valueOf(isLoggedIn), Toast.LENGTH_SHORT).show();
+
+        //FirebaseCrash.report(new Exception("My first Android non-fatal error"));
     }
 
     @Override
@@ -54,6 +55,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @OnClick(R.id.btn_login)
@@ -69,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<UserCredentials> call, Response<UserCredentials> response) {
                 //mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()) {
-                    userId = response.body().getId();
-                    userToken = response.body().getmToken();
+                    updateCredentialsInPreference(response.body());
                     //showIdeaDataView();
                     Toast.makeText(getBaseContext(), "success", Toast.LENGTH_LONG).show();
                 } else {
@@ -90,5 +96,37 @@ public class LoginActivity extends AppCompatActivity {
                 //showErrorMessage();
             }
         });
+    }
+
+    private void updateCredentialsInPreference(UserCredentials userCredentials){
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).edit();
+        editor.putInt(getString(R.string.user_id_key), userCredentials.getId());
+        editor.putString(getString(R.string.token_key), userCredentials.getmToken());
+        editor.apply();
+    }
+
+    private void checkUserCredentials(){
+        //Retrieving and validating if user is logged in
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE);
+        String restoredToken = prefs.getString(getString(R.string.token_key), null);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
+        if (restoredToken != null) {
+            isLoggedIn = true;
+            Toast.makeText(this, "You are logged in", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            isLoggedIn = false;
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //check what preference change
+        if (key.equals(getString(R.string.token_key))){
+            checkUserCredentials();
+        }
     }
 }
