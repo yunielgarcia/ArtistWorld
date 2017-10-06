@@ -1,10 +1,11 @@
 package com.mycompany.artistworld.activities;
 
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -107,46 +108,9 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
      */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new AsyncTaskLoader<Cursor>(this) {
+        return new CursorLoader(getBaseContext(), ArtistWorldContract.ProjectEntry.CONTENT_URI,
+                null, null, null, ArtistWorldContract.ProjectEntry.COLUMN_TIMESTAMP);
 
-            // Initialize a Cursor, this will hold all the task data
-            Cursor mTaskData = null;
-
-            // onStartLoading() is called when a loader first starts loading data
-            @Override
-            protected void onStartLoading() {
-                if (mTaskData != null) {
-                    // Delivers any previously loaded data immediately
-                    deliverResult(mTaskData);
-                } else {
-                    // Force a new load
-                    forceLoad();
-                }
-            }
-
-            // loadInBackground() performs asynchronous loading of data
-            @Override
-            public Cursor loadInBackground() {
-                // implement to load data
-                try {
-                    return getContentResolver().query(ArtistWorldContract.ProjectEntry.CONTENT_URI,
-                            null,
-                            null,
-                            null,
-                            ArtistWorldContract.ProjectEntry.COLUMN_TIMESTAMP);
-                } catch (Exception e){
-                    Log.e(TAG, "Failed to asynchronosly load data");
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            // deliverResult sends the result of the load, a Cursor, to the registered listener
-            public void deliverResult(Cursor data) {
-                mTaskData = data;
-                super.deliverResult(data);
-            }
-        };
     }
 
     /**

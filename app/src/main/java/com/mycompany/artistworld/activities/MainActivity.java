@@ -183,6 +183,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent LoginIntent = new Intent(getBaseContext(), LoginActivity.class);
                         startActivity(LoginIntent);
                         break;
+                    case R.id.nav_logout:
+                        navItemIndex = 2;
+//                      borrar el preference y enganchar el listener en esta actividad para algun posible cambio en el ui, como mostrar uno u otra login / logout
+                        break;
                     case R.id.nav_create:
                         navItemIndex = 1;
 //                        CURRENT_TAG = TAG_HOME;

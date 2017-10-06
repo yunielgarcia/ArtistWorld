@@ -110,15 +110,13 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE);
         String restoredToken = prefs.getString(getString(R.string.token_key), null);
         prefs.registerOnSharedPreferenceChangeListener(this);
+        isLoggedIn = restoredToken != null;
 
-        if (restoredToken != null) {
-            isLoggedIn = true;
+        if (isLoggedIn) {
             Toast.makeText(this, "You are logged in", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        }else {
-            isLoggedIn = false;
         }
     }
 

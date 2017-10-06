@@ -26,14 +26,18 @@ public class Project implements Parcelable{
     private int mVotePercent;
     @SerializedName("slug")
     private String mSlug;
+    @SerializedName("url")
+    private String mUrl;
 
-    public Project(String mTitle, String mDescription, List<Content> contents, String creator, int votePercent, String slug) {
+
+    public Project(String mTitle, String mDescription, List<Content> contents, String creator, int votePercent, String slug, String url) {
         this.mTitle = mTitle;
         this.mDescription = mDescription;
         this.mContents = contents;
         this.mIdeaCreator = creator;
         this.mVotePercent = votePercent;
         this.mSlug = slug;
+        this.mUrl = url;
     }
 
     protected Project(Parcel in) {
@@ -49,6 +53,7 @@ public class Project implements Parcelable{
         mIdeaCreator = in.readString();
         mVotePercent = in.readInt();
         mSlug = in.readString();
+        mUrl = in.readString();
     }
 
     @SuppressWarnings("unused")
@@ -88,6 +93,10 @@ public class Project implements Parcelable{
         return mSlug;
     }
 
+    public String getmUrl() {
+        return mUrl;
+    }
+
     //Parcelable methods
     @Override
     public int describeContents() {
@@ -109,5 +118,6 @@ public class Project implements Parcelable{
         dest.writeString(mIdeaCreator);
         dest.writeInt(mVotePercent);
         dest.writeString(mSlug);
+        dest.writeString(mUrl);
     }
 }
