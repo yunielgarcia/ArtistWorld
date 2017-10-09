@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -20,16 +21,18 @@ import android.widget.ImageView;
 
 import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.adapter.ViewPagerAdapter;
+import com.mycompany.artistworld.data.Utils;
 import com.mycompany.artistworld.fragments.HomeFragment;
 import com.mycompany.artistworld.fragments.PopularFragment;
 import com.mycompany.artistworld.fragments.RecentlyAddedFragment;
+import com.mycompany.artistworld.objects.UserCredentials;
 import com.mycompany.artistworld.other.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgNavHeaderBg;
     private ImageView imgProfile;
     private View navHeader;
+
+    private boolean isLoggedIn;
 
     // urls to load navigation header background image
     // and profile image
@@ -69,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        updateUi();
+
         setSupportActionBar(toolbar);
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -83,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
 
+
+
         // load nav menu header data
         loadNavHeader();
 
@@ -90,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView();
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
     }
 
 
@@ -124,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(
                 new SearchView.OnQueryTextListener() {
-
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         //text has changed , apply filtering
@@ -167,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationView() {
+        //https://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -185,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         navItemIndex = 2;
-//                      borrar el preference y enganchar el listener en esta actividad para algun posible cambio en el ui, como mostrar uno u otra login / logout
+                        updateCredentialsInPreference(new UserCredentials(null, 0));
                         break;
                     case R.id.nav_create:
                         navItemIndex = 1;
@@ -245,5 +260,38 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+    }
+
+
+    private void updateCredentialsInPreference(UserCredentials userCredentials){
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).edit();
+        editor.putInt(getString(R.string.user_id_key), userCredentials.getId());
+        editor.putString(getString(R.string.token_key), userCredentials.getmToken());
+        editor.apply();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //check what preference change
+        if (key.equals(getString(R.string.token_key))){
+            updateUi();
+        }
+    }
+
+    private void updateUi(){
+        // Set up a listener whenever a key changes
+        getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
+
+        isLoggedIn = Utils.isLoggedIn(this);
+
+        if (isLoggedIn){
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_create).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+        }else {
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_create).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+        }
     }
 }
