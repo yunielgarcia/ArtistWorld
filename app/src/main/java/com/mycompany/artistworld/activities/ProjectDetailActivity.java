@@ -246,7 +246,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
 
     }
 
-    private void vote(int rate){
+    private void vote(final int rate){
         //load the idea here and then if success go to detail
         IdeaVotePost ideaVotePost = new IdeaVotePost(mSelectedIdea.getmUrl(), rate);
 
@@ -257,7 +257,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
                 //mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()){
                     Toast.makeText(getBaseContext(), "Success" , Toast.LENGTH_LONG).show();
-                    //adicionar idea a favoritas aqui y update ui en esta actividad
+                    saveInFavorite(rate);
                 } else {
                     if (response.code() == 401){
                         Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
@@ -351,7 +351,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
         Uri uri = getContentResolver().insert(ArtistWorldContract.ProjectEntry.CONTENT_URI, cv);
 
         if (uri != null) {
-            Toast.makeText(this, uri.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show();
         } else {
             FirebaseCrash.log("Failed to insert in favorite idea " + mSelectedIdea.getmTitle());
         }
