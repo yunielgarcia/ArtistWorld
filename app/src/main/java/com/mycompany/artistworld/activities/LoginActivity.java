@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
         ideaService = ServiceGenerator.createService(IdeaApiInterface.class);
 
         checkUserCredentials();
-        Toast.makeText(this, String.valueOf(isLoggedIn), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(isLoggedIn), Toast.LENGTH_SHORT).show();
 
         //FirebaseCrash.report(new Exception("My first Android non-fatal error"));
     }
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
                 if (response.isSuccessful()) {
                     updateCredentialsInPreference(response.body());
                     //showIdeaDataView();
-                    Toast.makeText(getBaseContext(), "success", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), "success", Toast.LENGTH_LONG).show();
                 } else {
                     if (response.code() == 401) {
                         Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();

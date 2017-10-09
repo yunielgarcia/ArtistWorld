@@ -3,6 +3,7 @@ package com.mycompany.artistworld.rest;
 import com.mycompany.artistworld.model.Project;
 import com.mycompany.artistworld.model.ProjectResponse;
 import com.mycompany.artistworld.objects.AuthUser;
+import com.mycompany.artistworld.objects.AuthUserForVote;
 import com.mycompany.artistworld.objects.IdeaVotePost;
 import com.mycompany.artistworld.objects.UserCredentials;
 
@@ -38,12 +39,14 @@ public interface IdeaApiInterface {
     @GET("v1/ideas/{idea_slug}")
     Call<Project> getIdea(@Path("idea_slug") String slug);
 
+    @POST("v1/votes")
+    Call<ResponseBody> vote(@Body IdeaVotePost ideaVotePost);
+
     //maybe later create another interface for user actions
     @POST("auth/login/")
     Call<UserCredentials> login(@Body AuthUser authUser);
 
-    @POST("v1/votes")
-    Call<ResponseBody> vote(@Body IdeaVotePost ideaVotePost);
-
+    @POST("v1/people/easyregister")
+    Call<ResponseBody> createForVote(@Body AuthUserForVote authUserForVote);
 
 }
