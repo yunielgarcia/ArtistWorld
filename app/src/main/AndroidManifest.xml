@@ -48,7 +48,19 @@
             android:exported="false" />
 
         <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
+
+        <receiver android:name=".widget.ProjectWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/project_widget_provider_info" />
+        </receiver>
+
+        <service android:name=".widget.ProjectService" />
     </application>
 
 </manifest>

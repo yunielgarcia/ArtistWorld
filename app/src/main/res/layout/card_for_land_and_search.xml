@@ -103,8 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="centerCrop"
-                tools:src="@mipmap/jaz_launcher" />
+                android:scaleType="centerCrop" />
 
 
         </LinearLayout>

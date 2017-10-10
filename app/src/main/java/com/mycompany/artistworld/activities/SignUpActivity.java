@@ -56,6 +56,13 @@ public class SignUpActivity extends AppCompatActivity implements SharedPreferenc
         getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    @OnClick(R.id.sign_in_button)
+    public void goToLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @OnClick(R.id.sign_up_button)
     public void createForVote(){
         String username = mUsername.getText().toString();

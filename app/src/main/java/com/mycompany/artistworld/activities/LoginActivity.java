@@ -98,6 +98,13 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
         });
     }
 
+    @OnClick(R.id.btn_signup)
+    public void goToRegister(){
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void updateCredentialsInPreference(UserCredentials userCredentials){
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).edit();
         editor.putInt(getString(R.string.user_id_key), userCredentials.getId());

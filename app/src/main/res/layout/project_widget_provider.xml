@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lightGreen"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_padding">
+
+
+    <ImageView
+        android:id="@+id/widget_logo"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/artistworld"/>
+
+    <LinearLayout
+        android:id="@+id/widget_idea_ll_cont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/input_field">
+
+        <ImageView
+            android:id="@+id/widget_idea_img"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:src="@mipmap/a_ic" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/widget_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_centerInParent="true"
+                android:padding="20dp"
+                android:textColor="@color/card_title_c"
+                android:textSize="@dimen/idea_card_title_size"
+                android:text="@string/appwidget_text"
+                />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -36,7 +36,7 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
     <string name="btn_login">LOGIN</string>
-    <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
+    <string name="btn_link_to_register">Not a member? Get registered now!</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
@@ -54,6 +54,10 @@
     <string name="user_id_key" translatable="false">user_id</string>
     <string name="token_key" translatable="false">token</string>
     <string name="preference_name" translatable="false">preference</string>
+
+    <!--widget-->
+    <string name="appwidget_text">Vote on ideas to keep track here</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
 

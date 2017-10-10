@@ -109,7 +109,7 @@ public class FavoriteActivity extends AppCompatActivity implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getBaseContext(), ArtistWorldContract.ProjectEntry.CONTENT_URI,
-                null, null, null, ArtistWorldContract.ProjectEntry.COLUMN_TIMESTAMP);
+                null, null, null, ArtistWorldContract.ProjectEntry.COLUMN_TIMESTAMP + " DESC");
 
     }
 

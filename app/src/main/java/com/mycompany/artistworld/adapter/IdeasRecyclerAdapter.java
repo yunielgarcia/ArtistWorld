@@ -78,6 +78,8 @@ public class IdeasRecyclerAdapter extends RecyclerView.Adapter<IdeasRecyclerAdap
         Project singleIdeaObj = mIdeaData.get(position);
         Context context = holder.mImageView.getContext();
         String idea_poster_path = singleIdeaObj.getmContents().get(0).getmDisplayImg();
+        //improving accessibility dynamically
+        holder.mImageView.setContentDescription(singleIdeaObj.getmDescription());
         //main content
         Picasso.with(context)
                 .load(idea_poster_path)

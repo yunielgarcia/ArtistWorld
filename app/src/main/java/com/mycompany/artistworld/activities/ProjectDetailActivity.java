@@ -34,6 +34,7 @@ import com.mycompany.artistworld.model.Project;
 import com.mycompany.artistworld.objects.IdeaVotePost;
 import com.mycompany.artistworld.rest.IdeaApiInterface;
 import com.mycompany.artistworld.rest.ServiceGenerator;
+import com.mycompany.artistworld.widget.ProjectService;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
@@ -257,6 +258,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
                 //mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()){
                     Toast.makeText(getBaseContext(), "Success" , Toast.LENGTH_LONG).show();
+                    //Add to favorite
                     saveInFavorite(rate);
                 } else {
                     if (response.code() == 401){
@@ -352,6 +354,8 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
 
         if (uri != null) {
             Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show();
+            //update app's widget
+            ProjectService.startActionUpdateWidget(getBaseContext());
         } else {
             FirebaseCrash.log("Failed to insert in favorite idea " + mSelectedIdea.getmTitle());
         }
