@@ -15,7 +15,7 @@
             android:title="@string/action_create_account" />
     </group>
 
-    <item android:title="Other">
+    <item android:title="@string/drawer_nav_other_txt">
         <menu>
             <item
                 android:id="@+id/nav_favorite"

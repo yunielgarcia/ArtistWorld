@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/left_right_card_margin"
-        android:layout_marginEnd="@dimen/left_right_card_margin"
-        android:layout_marginTop="@dimen/top_bottom_card_margin"
         android:layout_marginBottom="@dimen/top_bottom_card_margin"
+        android:layout_marginEnd="@dimen/left_right_card_margin"
+        android:layout_marginStart="@dimen/left_right_card_margin"
+        android:layout_marginTop="@dimen/top_bottom_card_margin"
         android:foreground="?android:attr/selectableItemBackground"
         android:maxWidth="50dp"
         card_view:cardCornerRadius="@dimen/idea_card_corner_radius"
@@ -36,26 +36,26 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:paddingLeft="@dimen/idea_card_title_bottom_left_right_padding"
                     android:paddingRight="@dimen/idea_card_title_bottom_left_right_padding"
                     android:paddingTop="@dimen/idea_card_title_top_padding"
                     android:textColor="@color/card_title_c"
                     android:textSize="@dimen/idea_card_title_size"
-                    android:ellipsize="end"
-                    android:maxLines="1"
                     tools:text="Title goes here" />
 
                 <TextView
                     android:id="@+id/by"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:paddingBottom="@dimen/idea_card_title_bottom_left_right_padding"
                     android:paddingLeft="@dimen/idea_card_title_bottom_left_right_padding"
                     android:paddingRight="@dimen/idea_card_title_bottom_left_right_padding"
                     android:paddingTop="@dimen/idea_card_by_padding_top"
                     android:textSize="@dimen/idea_card_by"
-                    android:ellipsize="end"
-                    android:maxLines="1"
                     tools:text="by: yggarcia" />
 
                 <RelativeLayout
@@ -80,6 +80,7 @@
                         android:layout_height="@dimen/thumb_size"
                         android:layout_below="@+id/prog_bar"
                         android:layout_marginStart="@dimen/thumb_margin"
+                        android:contentDescription="@string/project_main_image_def_descr"
                         android:src="@drawable/ic_thumb_up" />
 
                     <TextView
@@ -103,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/project_main_image_def_descr"
                 android:scaleType="centerCrop" />
 
 

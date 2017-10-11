@@ -21,7 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class LoginActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
@@ -81,9 +81,9 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
                     //Toast.makeText(getBaseContext(), "success", Toast.LENGTH_LONG).show();
                 } else {
                     if (response.code() == 401) {
-                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                     } else if (response.code() >= 400) {
-                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -99,20 +99,20 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
     }
 
     @OnClick(R.id.btn_signup)
-    public void goToRegister(){
+    public void goToRegister() {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void updateCredentialsInPreference(UserCredentials userCredentials){
+    private void updateCredentialsInPreference(UserCredentials userCredentials) {
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE).edit();
         editor.putInt(getString(R.string.user_id_key), userCredentials.getId());
         editor.putString(getString(R.string.token_key), userCredentials.getmToken());
         editor.apply();
     }
 
-    private void checkUserCredentials(){
+    private void checkUserCredentials() {
         //Retrieving and validating if user is logged in
         SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_name), MODE_PRIVATE);
         String restoredToken = prefs.getString(getString(R.string.token_key), null);
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
         isLoggedIn = restoredToken != null;
 
         if (isLoggedIn) {
-            Toast.makeText(this, "You are logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements SharedPreference
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         //check what preference change
-        if (key.equals(getString(R.string.token_key))){
+        if (key.equals(getString(R.string.token_key))) {
             checkUserCredentials();
         }
     }

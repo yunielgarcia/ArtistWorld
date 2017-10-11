@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.mycompany.artistworld.R;
 import com.mycompany.artistworld.data.ArtistWorldContract;
 import com.mycompany.artistworld.model.Project;
 import com.mycompany.artistworld.rest.IdeaApiInterface;
@@ -96,10 +97,10 @@ public class ProjectService extends IntentService {
                         requestUpdateWidgetWithLoadedData(slug, imgPath, voteWeight, projectInWidget);
                     } else {
                         if (response.code() == 401){
-                            Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                             requestUpdateWidgetWithLoadedData(slug, imgPath, voteWeight, projectInWidget);
                         } else if (response.code() >= 400){
-                            Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
                             requestUpdateWidgetWithLoadedData(slug, imgPath, voteWeight, projectInWidget);
                         }
                     }

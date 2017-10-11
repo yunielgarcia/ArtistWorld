@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity implements SharedPreferenc
         mAuthUser = new AuthUser(username, psw);
 
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(psw) || TextUtils.isEmpty(email) ){
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.all_fields_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -84,15 +84,12 @@ public class SignUpActivity extends AppCompatActivity implements SharedPreferenc
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 //mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (response.isSuccessful()) {
-                    //updateCredentialsInPreference(response.body());
-                    //showIdeaDataView();
-                    Toast.makeText(getBaseContext(), "create success", Toast.LENGTH_LONG).show();
                     loginUser(mAuthUser);
                 } else {
                     if (response.code() == 401) {
-                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                     } else if (response.code() >= 400) {
-                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -119,12 +116,12 @@ public class SignUpActivity extends AppCompatActivity implements SharedPreferenc
                 if (response.isSuccessful()) {
                     updateCredentialsInPreference(response.body());
                     //showIdeaDataView();
-                    Toast.makeText(getBaseContext(), "Login success", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), getString(R.string.logged_in), Toast.LENGTH_LONG).show();
                 } else {
                     if (response.code() == 401) {
-                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                     } else if (response.code() >= 400) {
-                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -154,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity implements SharedPreferenc
         isLoggedIn = restoredToken != null;
 
         if (isLoggedIn) {
-            Toast.makeText(this, "You are logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.logged_in), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

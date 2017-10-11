@@ -29,19 +29,19 @@
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_slide_height"
+                android:nextFocusUp="@id/toolbar"
                 custom:auto_cycle="true"
                 custom:indicator_visibility="visible"
                 custom:pager_animation="Accordion"
-                custom:pager_animation_span="1100"
-                android:nextFocusUp="@id/toolbar"/>
+                custom:pager_animation_span="1100" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:focusable="true"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:focusable="true"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -75,28 +75,30 @@
 
                 <TextView
                     android:id="@+id/detail_dash_by"
-                    android:layout_below="@id/detail_dash_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_dash_title"
                     android:paddingBottom="@dimen/idea_card_title_bottom_left_right_padding"
-                    android:paddingRight="@dimen/idea_card_title_bottom_left_right_padding"
+                    android:paddingEnd="@dimen/idea_card_title_bottom_left_right_padding"
+                    android:paddingStart="0dp"
                     android:paddingTop="@dimen/idea_card_by_padding_top"
                     android:textSize="@dimen/idea_card_by"
                     tools:text="by: yggarcia" />
 
                 <RelativeLayout
                     android:id="@+id/detail_vote_given_cont"
-                    android:layout_alignParentRight="true"
                     android:layout_width="50dp"
-                    android:visibility="invisible"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="invisible">
 
                     <ImageView
-                        android:layout_alignParentRight="true"
                         android:id="@+id/fav_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_fav_heart"/>
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/amount_of_votes_descr"
+                        android:src="@drawable/ic_fav_heart" />
 
                     <TextView
                         android:id="@+id/detail_vote_weight_tv"
@@ -105,19 +107,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="6dp"
                         android:layout_marginTop="5dp"
+                        android:layout_toStartOf="@id/fav_one"
                         android:textColor="@android:color/primary_text_light"
-                        tools:text="5"
-                        android:layout_toLeftOf="@id/fav_one"
-                        />
+                        tools:text="5" />
 
                 </RelativeLayout>
 
 
-
-
-
             </RelativeLayout>
-
 
 
             <RelativeLayout
@@ -139,6 +136,7 @@
                     android:layout_width="@dimen/thumb_size"
                     android:layout_height="@dimen/thumb_size"
                     android:layout_below="@+id/detail_prog_bar"
+                    android:contentDescription="@string/total_of_percent_descr"
                     android:src="@drawable/ic_thumb_up" />
 
                 <TextView
@@ -171,10 +169,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_fab_wht"
+        app:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
-        app:elevation="@dimen/fab_elevation"/>
+        app:elevation="@dimen/fab_elevation"
+        android:contentDescription="@string/fab_descr"/>
 
 </android.support.design.widget.CoordinatorLayout>
 

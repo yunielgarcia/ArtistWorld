@@ -20,6 +20,7 @@
             android:layout_height="@dimen/logo_w_h"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
+            android:contentDescription="@string/artist_world_logo_descr"
             android:src="@mipmap/a_ic" />
 
         <android.support.design.widget.TextInputLayout
@@ -77,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/colorAccent"
+            android:contentDescription="@string/action_sign_in_short"
             android:text="@string/action_sign_in_short"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -89,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
+            android:contentDescription="@string/btn_link_to_login"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
             android:textColor="@color/white"

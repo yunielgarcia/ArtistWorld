@@ -20,6 +20,7 @@
             android:layout_height="@dimen/logo_w_h"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
+            android:contentDescription="@string/artist_world_logo_descr"
             android:src="@mipmap/a_ic" />
 
         <android.support.design.widget.TextInputLayout
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/hint_password"
+                android:inputType="textPassword"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white" />
         </android.support.design.widget.TextInputLayout>
@@ -59,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@color/colorAccent"
+            android:contentDescription="@string/btn_login"
             android:text="@string/btn_login"
             android:textColor="@android:color/black" />
 
@@ -70,6 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
+            android:contentDescription="@string/btn_link_to_register"
             android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
             android:textColor="@color/white"

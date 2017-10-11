@@ -137,9 +137,9 @@ public class PopularFragment extends Fragment implements IdeasRecyclerAdapter.Li
                     mIdeasRecyclerAdapter.setIdeasData(mPopularIdeas);
                 } else {
                     if (response.code() == 401){
-                        Toast.makeText(getContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                     } else if (response.code() >= 400){
-                        Toast.makeText(getContext(), "Client Error " + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.client_error) + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
                     }
                 }
             }

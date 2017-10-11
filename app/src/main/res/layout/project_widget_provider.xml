@@ -12,39 +12,40 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/artistworld"/>
+        android:contentDescription="@string/artist_world_logo_descr"
+        android:src="@drawable/artistworld" />
 
     <LinearLayout
         android:id="@+id/widget_idea_ll_cont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/input_field">
+        android:background="@color/input_field"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/widget_idea_img"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:contentDescription="@string/project_main_image_def_descr"
             android:src="@mipmap/a_ic" />
 
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="6">
 
             <TextView
                 android:id="@+id/widget_percent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
                 android:layout_centerInParent="true"
+                android:ellipsize="end"
                 android:padding="20dp"
-                android:textColor="@color/card_title_c"
-                android:textSize="@dimen/idea_card_title_size"
                 android:text="@string/appwidget_text"
-                />
+                android:textColor="@color/card_title_c"
+                android:textSize="@dimen/idea_card_title_size" />
 
         </RelativeLayout>
 

@@ -43,9 +43,9 @@
                 android:id="@+id/fav_vote_weight_label_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginBottom="@dimen/fav_item_label_bottom_margin"
-                android:text="Vote weight" />
+                android:text="@string/vote_weight_txt" />
 
             <TextView
                 android:id="@+id/fav_vote_weight_tv"
@@ -55,7 +55,7 @@
                 android:layout_below="@id/fav_vote_weight_label_tv"
                 android:layout_marginEnd="6dp"
                 android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/fav_vote_heart_iv"
+                android:layout_toStartOf="@+id/fav_vote_heart_iv"
                 android:textColor="@android:color/primary_text_light"
                 tools:text="5" />
 
@@ -63,9 +63,10 @@
                 android:id="@+id/fav_vote_heart_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/fav_vote_weight_label_tv"
+                android:layout_alignEnd="@+id/fav_vote_weight_label_tv"
                 android:layout_below="@id/fav_vote_weight_label_tv"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
+                android:contentDescription="@string/amount_of_votes_descr"
                 android:src="@drawable/ic_fav_heart" />
 
         </RelativeLayout>

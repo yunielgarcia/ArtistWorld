@@ -58,6 +58,35 @@
     <!--widget-->
     <string name="appwidget_text">Vote on ideas to keep track here</string>
     <string name="add_widget">Add widget</string>
+    <string name="artist_world_logo_descr">Artist world logo</string>
+    <string name="amount_of_votes_descr">Amount of votes</string>
+    <string name="total_of_percent_descr">Total of percent</string>
+    <string name="project_main_image_def_descr">Project main image</string>
+    <string name="navigation_menu_background_descr">Navigation menu Background</string>
+    <string name="profile_img_descr">Profile image</string>
+    <string name="drawer_nav_other_txt">Other</string>
+    <string name="vote_weight_txt">Vote weight</string>
+    <string name="fab_descr">Vote for this idea</string>
 
+    <!--java strings-->
+    <string name="unauthenticated">Unauthenticated</string>
+    <string name="client_error">"Client Error "</string>
+    <string name="logged_in">"You are logged in"</string>
+    <string name="error">"Sorry, an error happened."</string>
+    <string name="added_fav">"Added to favorites"</string>
+    <string name="failed_fav" translatable="false">"Failed to insert in favorite idea "</string>
+    <string name="success">"Success"</string>
+    <string name="need_login">"You need to be logged in"</string>
+    <string name="submit">"Submit"</string>
+    <string name="cancel">"Cancel"</string>
+    <string name="one_star">"Very Bad"</string>
+    <string name="two_star">"Not good"</string>
+    <string name="three_star">"Quite ok"</string>
+    <string name="four_star">"Very Good"</string>
+    <string name="five_star">"Excellent !!!"</string>
+    <string name="dialog_title">"Rate this project"</string>
+    <string name="dialog_descr">"Please select some stars and give your feedback"</string>
+    <string name="dialog_hint">"Please write your comment here ..."</string>
+    <string name="all_fields_required">"All fields are required"</string>
 </resources>
 

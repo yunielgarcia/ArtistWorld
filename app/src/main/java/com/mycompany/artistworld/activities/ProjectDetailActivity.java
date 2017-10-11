@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -109,7 +110,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
             mSelectedIdea = extras.getParcelable(HomeFragment.IDEA_SELECTED);
 
             collapsingToolbarLayout.setTitle(mSelectedIdea.getmTitle());
-            collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent_color));
+            collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.transparent_color));
 
             mContentUrls = initializeContentArrayUrl();
             initSlider();
@@ -209,15 +210,15 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
 
         if (Utils.isLoggedIn(this)) {
             new AppRatingDialog.Builder()
-                    .setPositiveButtonText("Submit")
-                    .setNegativeButtonText("Cancel")
-                    .setNoteDescriptions(Arrays.asList("Very Bad", "Not good", "Quite ok", "Very Good", "Excellent !!!"))
+                    .setPositiveButtonText(getString(R.string.submit))
+                    .setNegativeButtonText(getString(R.string.cancel))
+                    .setNoteDescriptions(Arrays.asList(getString(R.string.one_star), getString(R.string.two_star), getString(R.string.three_star), getString(R.string.four_star), getString(R.string.five_star)))
                     .setDefaultRating(1)
-                    .setTitle("Rate this project")
-                    .setDescription("Please select some stars and give your feedback")
+                    .setTitle(getString(R.string.dialog_title))
+                    .setDescription(getString(R.string.dialog_descr))
                     //.setTitleTextColor(R.color.titleTextColor)
                     //.setDescriptionTextColor(R.color.contentTextColor)
-                    .setHint("Please write your comment here ...")
+                    .setHint(getString(R.string.dialog_hint))
                     //.setHintTextColor(R.color.hintTextColor)
                     //.setCommentTextColor(R.color.commentTextColor)
                     .setCommentBackgroundColor(R.color.input_field)
@@ -225,7 +226,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
                     .create(ProjectDetailActivity.this)
                     .show();
         } else {
-            Toast.makeText(this, "You need to be logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.need_login), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -235,7 +236,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
     @Override
     public void onPositiveButtonClicked(int rate, @NotNull String comment) {
         Toast.makeText(this, String.valueOf(rate), Toast.LENGTH_SHORT).show();
-        if (votedAlready){
+        if (votedAlready) {
             //it's not gonna be implemented hiding vote button
         } else {
             vote(rate);
@@ -247,7 +248,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
 
     }
 
-    private void vote(final int rate){
+    private void vote(final int rate) {
         //load the idea here and then if success go to detail
         IdeaVotePost ideaVotePost = new IdeaVotePost(mSelectedIdea.getmUrl(), rate);
 
@@ -256,17 +257,16 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 //mLoadingIndicator.setVisibility(View.INVISIBLE);
-                if (response.isSuccessful()){
-                    Toast.makeText(getBaseContext(), "Success" , Toast.LENGTH_LONG).show();
+                if (response.isSuccessful()) {
+                    Toast.makeText(getBaseContext(), getString(R.string.success), Toast.LENGTH_LONG).show();
                     //Add to favorite
                     saveInFavorite(rate);
                 } else {
-                    if (response.code() == 401){
-                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
-                    } else if (response.code() >= 400){
-                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
+                    if (response.code() == 401) {
+                        Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
+                    } else if (response.code() >= 400) {
+                        Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
                     }
-                    //showIdeaDataView();
                 }
             }
 
@@ -274,19 +274,10 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                //showIdeaDataView();
             }
         });
     }
     ///////////////////////////  VOTE DIALOG ENDS  //////////////////////
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -305,7 +296,7 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Some providers return null if an error occurs, others throw an exception
         if (null == data) {
-            Toast.makeText(getBaseContext(), "Sorry, an error happened.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
         /*
          * Insert code here to handle the error. Be sure not to use the cursor! You may want to
          * call android.util.Log.e() to log this error.
@@ -353,14 +344,13 @@ public class ProjectDetailActivity extends AppCompatActivity implements BaseSlid
         Uri uri = getContentResolver().insert(ArtistWorldContract.ProjectEntry.CONTENT_URI, cv);
 
         if (uri != null) {
-            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.added_fav), Toast.LENGTH_LONG).show();
             //update app's widget
             ProjectService.startActionUpdateWidget(getBaseContext());
         } else {
-            FirebaseCrash.log("Failed to insert in favorite idea " + mSelectedIdea.getmTitle());
+            FirebaseCrash.log(getString(R.string.failed_fav) + mSelectedIdea.getmTitle());
         }
     }
-
 
 
 }

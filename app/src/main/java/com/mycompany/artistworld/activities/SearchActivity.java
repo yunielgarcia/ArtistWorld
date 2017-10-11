@@ -146,9 +146,9 @@ public class SearchActivity extends AppCompatActivity implements IdeasRecyclerAd
                     mIdeasRecyclerAdapter.setIdeasData(mSearchIdeasResult);
                 } else {
                     if (response.code() == 401){
-                        Toast.makeText(getBaseContext(), "Unauthenticated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.unauthenticated), Toast.LENGTH_SHORT).show();
                     } else if (response.code() >= 400){
-                        Toast.makeText(getBaseContext(), "Client Error " + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.client_error) + response.code() + " " + response.message() , Toast.LENGTH_LONG).show();
                     }
                 }
             }
